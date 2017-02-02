@@ -34,8 +34,8 @@ public class UserAccount {
         return userName;
     }
 
-    public void setUsername(String username) {
-        this.userName = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
