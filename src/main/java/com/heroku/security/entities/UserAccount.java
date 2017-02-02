@@ -1,23 +1,14 @@
 package com.heroku.security.entities;
 
-import java.io.Serializable;
+import javax.persistence.*;
 import java.util.Set;
 
-import javax.persistence.*;
-
 @Entity
-@Table(name = "users")
-public class UserAccount implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)    
-    @Column(name="id")
-    private Long userId;
-
-	@Column(name = "username")
-    private String userName;   
+@Table(name = "user")
+public class UserAccount {
+    private Long id;
+    @Column(name = "username")
+    private String userName;
 
 	@Column(name = "password")
     private String password;   
@@ -27,69 +18,36 @@ public class UserAccount implements Serializable {
     
 	@Column(name ="enabled")
 	private int enabled;
-
     private Set<Role> roles;
 
-	public UserAccount(){
-		
-	}
-	public UserAccount(String userId, String password){
-		this.userName = userId;
-		this.password = password;
-		this.email = "";
-		this.enabled = 1;
-	}
-	
-	public UserAccount(UserAccount user) {
-	        this.userId = user.userId;
-	        this.userName = user.userName;
-	        this.email = user.email;       
-	        this.password = user.password;
-	        this.enabled=user.enabled;        
-	}
-	
-	public int getEnabled() {
-		return enabled;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long getId() {
+        return id;
+    }
 
-	public void setEnabled(int enabled) {
-		this.enabled = enabled;
-	}	
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public Long getUserid() {
-		return userId;
-	}
+    public String getUserName() {
+        return userName;
+    }
 
-	public void setUserid(Long userid) {
-		this.userId = userid;
-	}
-	
-	public String getPassword() {
-		return password;
-	}
+    public void setUsername(String username) {
+        this.userName = username;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	public String getEmail() {
-		return email;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	
     @ManyToMany
-    @JoinTable(name = "role", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "id"))
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     public Set<Role> getRoles() {
         return roles;
     }
@@ -97,5 +55,4 @@ public class UserAccount implements Serializable {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-  
 }

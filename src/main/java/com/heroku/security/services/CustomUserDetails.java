@@ -17,7 +17,6 @@ public class CustomUserDetails extends UserAccount implements UserDetails {
 	
 
 	public CustomUserDetails(UserAccount user,List<String> userRoles){
-		super(user);
 		this.userRoles=userRoles;
 	}
 	
