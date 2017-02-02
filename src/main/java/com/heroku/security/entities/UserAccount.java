@@ -89,7 +89,7 @@ public class UserAccount implements Serializable {
 	}
 	
     @ManyToMany
-    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JoinTable(name = "role", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "id"))
     public Set<Role> getRoles() {
         return roles;
     }
