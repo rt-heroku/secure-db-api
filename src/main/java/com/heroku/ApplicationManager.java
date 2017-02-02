@@ -1,7 +1,6 @@
 package com.heroku;
 
 import java.util.HashSet;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -15,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.heroku.security.entities.Role;
 import com.heroku.security.entities.UserAccount;
+import com.heroku.security.repositories.UserRepository;
 import com.heroku.security.repositories.UserRolesRepository;
 import com.heroku.security.services.UserService;
 
@@ -29,16 +29,17 @@ public class ApplicationManager {
     
     @Autowired
     UserService customerUserDetailsService;
-
+    
     @Autowired 
     UserRolesRepository userRolesRepository;
     
     @Bean
-    CommandLineRunner init(final UserService userService) {
+    CommandLineRunner init(final UserRepository userRepository) {
       
       return new CommandLineRunner() {
 
-        @Override
+        @SuppressWarnings("serial")
+		@Override
         public void run(String... arg0) throws Exception {
     		
     		for (int i = 0; i< arg0.length; i++)
@@ -48,20 +49,14 @@ public class ApplicationManager {
 	        	System.out.println("EXECUTING ApplicationManager this will create or replace the SUPER USER admin !!!! - " + arg0.length);
 	        	String password = arg0[0];
 	        	String email = arg0[1];
-	        	UserAccount u = new UserAccount();
 	        	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	    		String hashedPassword = passwordEncoder.encode(password);
-	    		Role r = new Role("ROLE_ADMIN");
-	    		Set<Role> roles = new HashSet<Role>();
-	    		roles.add(r);
-	    		userRolesRepository.save(r);
-	    		
-	    		u.setUsername("admin");
-	    		u.setPassword(hashedPassword);
-	        	u.setEmail(email);
-	        	u.setEnabled(1);
-	        	u.setRoles(new HashSet<Role>(userRolesRepository.findUserRolesByUserName("admin")));
-	        	userService.save(u);
+	    		userRepository.save(new HashSet<UserAccount>(){{
+	                add(new UserAccount("admin", hashedPassword, email,
+	                		new HashSet<Role>(){{
+	                    add(new Role("ROLE_ADMIN"));
+	                }}));
+	            }});
 	        	
 	        	System.out.println("User admin has been reset!");
 	        	System.out.println("Press CTRL+C to end application...");

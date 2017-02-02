@@ -20,6 +20,18 @@ public class UserAccount {
 	private int enabled;
     private Set<Role> roles;
 
+    public UserAccount(){
+    	
+    }
+    
+    public UserAccount(String username, String password, String email, Set<Role> roles){
+    	this.username = username;
+    	this.password = password;
+    	this.email = email;
+    	this.enabled = 1;
+    	this.roles = roles;
+    }
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
