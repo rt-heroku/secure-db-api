@@ -1,7 +1,7 @@
 package com.heroku.security.entities;
 
 import java.io.Serializable;
-
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -27,7 +27,9 @@ public class UserAccount implements Serializable {
     
 	@Column(name ="enabled")
 	private int enabled;
-	
+
+    private Set<Role> roles;
+
 	public UserAccount(){
 		
 	}
@@ -86,6 +88,14 @@ public class UserAccount implements Serializable {
 		this.userName = userName;
 	}
 	
-	
+    @ManyToMany
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
   
 }
