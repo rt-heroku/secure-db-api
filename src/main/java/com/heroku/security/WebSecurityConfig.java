@@ -39,11 +39,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //     .antMatchers(HttpMethod.PUT, "/api/v1/profiles/**").hasAnyAuthority("ROLE_ADMIN")
 //     .antMatchers(HttpMethod.DELETE, "/api/v1/profiles/**").hasAnyAuthority("ROLE_ADMIN")
      		.anyRequest().fullyAuthenticated()
-     	.and()
-     		.logout()
-	     		.permitAll()
-//	     .and()
-//	     	.httpBasic()
+//     	.and()
+//     		.logout()
+//	     		.permitAll()
+	     .and()
+	     	.httpBasic()
 	     .and()
 	     	.csrf().disable();
  }

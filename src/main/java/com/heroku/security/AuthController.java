@@ -35,6 +35,13 @@ public class AuthController {
         return new ResponseEntity<>(HttpStatus.OK);
 	}
 
+    @RequestMapping(value = "/user", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserAccount> getUser(@RequestParam String username) {
+
+    	UserAccount ua = userService.findByUsername(username);
+
+        return new ResponseEntity<UserAccount>(ua,HttpStatus.OK);
+	}
 //	@RequestMapping(value = "/logout", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 //	public void doLogout() {
 //	}
