@@ -13,7 +13,7 @@ public interface UserRolesRepository extends CrudRepository<Role, Long> {
 	@Query("select a.name from Role a, UserAccount b where b.username=?1 and a.id=b.id")
     public List<String> findRoleByUserName(String username);
 
-	@Query("select a.* from Role a, UserAccount b where b.username=?1 and a.id=b.id")
+	@Query("select a from Role a, UserAccount b where b.username=?1 and a.id=b.id")
 	public List<Role> findUserRolesByUserName(String username);
 	
 }
