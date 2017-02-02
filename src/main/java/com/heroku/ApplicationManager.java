@@ -32,7 +32,11 @@ public class ApplicationManager {
         @Override
         public void run(String... arg0) throws Exception {
 //        	customerUserDetailsService.save(new UserAccount("admin", "admin"));
-        	
+    		System.out.println("Length!" + arg0.length);
+    		
+    		for (int i = 0; i< arg0.length; i++)
+    			System.out.println("arg[" + i + "]=" + arg0[i] );
+
         	if (arg0.length != 2)
         		System.out.println("Usage ApplicationManager <password> <email>!");
         	else {
