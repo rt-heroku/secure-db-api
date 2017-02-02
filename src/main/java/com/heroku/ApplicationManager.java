@@ -32,6 +32,7 @@ public class ApplicationManager {
         @Override
         public void run(String... arg0) throws Exception {
 //        	customerUserDetailsService.save(new UserAccount("admin", "admin"));
+        	System.out.println("EXECUTING ApplicationManager - CommandLineRunner!!!! - " + arg0);
         }
         
       };
