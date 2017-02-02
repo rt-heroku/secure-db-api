@@ -52,20 +52,16 @@ public class ApplicationManager {
 	        	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	    		String hashedPassword = passwordEncoder.encode(password);
 	    		Role r = new Role("ROLE_ADMIN");
-
+	    		Set<Role> roles = new HashSet<Role>();
+	    		roles.add(r);
+	    		userRolesRepository.save(r);
+	    		
 	    		u.setUsername("admin");
 	    		u.setPassword(hashedPassword);
 	        	u.setEmail(email);
 	        	u.setEnabled(1);
+	        	u.setRoles(new HashSet<Role>(userRolesRepository.findUserRolesByUserName("admin")));
 	        	userService.save(u);
-	        	
-	        	UserAccount admin = userService.findByUsername("admin");
-	        	
-	        	Set<UserAccount> users = new HashSet<UserAccount>();
-	        	users.add(admin);
-	        	r.setUsers(users);
-	        	
-	        	userRolesRepository.save(r);
 	        	
 	        	System.out.println("User admin has been reset!");
 	        	System.out.println("Press CTRL+C to end application...");

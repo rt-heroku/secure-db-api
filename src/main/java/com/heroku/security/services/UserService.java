@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.heroku.security.entities.Role;
 import com.heroku.security.entities.UserAccount;
 import com.heroku.security.repositories.UserRepository;
 import com.heroku.security.repositories.UserRolesRepository;
@@ -28,7 +29,11 @@ public class UserService implements UserDetailsService{
 	public UserAccount findByUsername(String username){
 		return userRepository.findByUsername(username);
 	}
-        
+    
+	public List<Role> findRolesByUsername(String username){
+		return userRolesRepository.findUserRolesByUserName(username);
+	}
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserAccount user=userRepository.findByUsername(username);
