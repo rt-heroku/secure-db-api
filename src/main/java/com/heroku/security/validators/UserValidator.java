@@ -1,18 +1,18 @@
 package com.heroku.security.validators;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.heroku.security.entities.UserAccount;
-import com.heroku.security.services.UserService;
 
 @Component
 public class UserValidator implements Validator {
     @Autowired
-    private UserService userService;
+    private UserDetailsService userService;
 
     @Override
     public boolean supports(Class<?> aClass) {

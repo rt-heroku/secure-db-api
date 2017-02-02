@@ -4,12 +4,16 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "role")
+@Table(name = "roles")
 public class Role {
     private Long id;
     private String name;
     private Set<UserAccount> users;
 
+    public Role() {
+    	super();
+    }
+    
     public Role(String name){
     	this.name = name;
     }

@@ -1,9 +1,15 @@
 package com.heroku.security;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,14 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.heroku.security.entities.UserAccount;
 import com.heroku.security.services.SecurityService;
-import com.heroku.security.services.UserService;
+import com.heroku.security.services.UserDetailsServiceImpl;
 
 @RestController
 @RequestMapping()
 public class AuthController {
 
     @Autowired
-    private UserService userService;
+    private UserDetailsServiceImpl userService;
 
     @Autowired
     private SecurityService securityService;
@@ -35,12 +41,30 @@ public class AuthController {
         return new ResponseEntity<>(HttpStatus.OK);
 	}
 
+    @RequestMapping(value = "/whoami", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public Map<String, Object> whoami() {
+
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    	Map<String, Object> ret = new HashMap<String,Object>();
+    	
+    	Object username = auth.getPrincipal();
+    	
+ //   	UserDetails ua = userService.loadUserByUsername(username);
+    	ret.put("user", username);
+ //   	ret.put("details", ua);
+    	ret.put("name", auth.getName());
+    	ret.put("authorities", auth.getAuthorities());
+    	ret.put("auth_details", auth.getDetails());
+        return ret;
+	}
+    
+    
     @RequestMapping(value = "/user", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserAccount> getUser(@RequestParam String username) {
+	public ResponseEntity<UserDetails> getUser(@RequestParam String username) {
 
-    	UserAccount ua = userService.findByUsername(username);
+    	UserDetails ua = userService.loadUserByUsername(username);
 
-        return new ResponseEntity<UserAccount>(ua,HttpStatus.OK);
+        return new ResponseEntity<UserDetails>(ua,HttpStatus.OK);
 	}
 //	@RequestMapping(value = "/logout", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 //	public void doLogout() {
