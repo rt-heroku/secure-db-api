@@ -10,7 +10,7 @@ import com.heroku.security.entities.Role;
 @Repository
 public interface UserRolesRepository extends CrudRepository<Role, Long> {
 	
-	@Query("select a.role from Role a, UserAccount b where b.userName=?1 and a.userid=b.id")
+	@Query("select a.name from Role a, UserAccount b where b.userName=?1 and a.id=b.id")
     public List<String> findRoleByUserName(String username);
 	
 }
