@@ -7,6 +7,6 @@ import com.heroku.security.entities.UserAccount;
 
 @Repository
 public interface UserRepository extends CrudRepository<UserAccount, Long> {
-    public UserAccount findByUserName(String username);
+    public UserAccount findByUsername(String username);
     
 }
