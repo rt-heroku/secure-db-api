@@ -50,7 +50,7 @@ public class CustomUserDetails extends UserAccount implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		return super.getUserName();
+		return super.getUsername();
 	}
 
 

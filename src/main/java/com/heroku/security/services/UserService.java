@@ -38,7 +38,7 @@ public class UserService implements UserDetailsService{
 	public UserDetails save(UserAccount u){
 		UserAccount ua = userRepository.save(u);
 		
-		return loadUserByUsername(ua.getUserName());
+		return loadUserByUsername(ua.getUsername());
 	}
 	
 		

@@ -49,7 +49,7 @@ public class AuthController {
 
         userService.save(user);
 
-        securityService.autologin(user.getUserName(), user.getPassword());
+        securityService.autologin(user.getUsername(), user.getPassword());
 
         return new ResponseEntity<HttpStatus>(HttpStatus.OK);
     }

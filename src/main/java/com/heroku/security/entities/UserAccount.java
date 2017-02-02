@@ -8,7 +8,7 @@ import java.util.Set;
 public class UserAccount {
     private Long id;
     @Column(name = "username")
-    private String userName;
+    private String username;
 
 	@Column(name = "password")
     private String password;   
@@ -30,12 +30,12 @@ public class UserAccount {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String userName) {
+        this.username = userName;
     }
 
     public String getPassword() {
@@ -55,4 +55,20 @@ public class UserAccount {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public int getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(int enabled) {
+		this.enabled = enabled;
+	}
 }
