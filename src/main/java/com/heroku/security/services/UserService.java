@@ -17,12 +17,17 @@ public class UserService implements UserDetailsService{
 	private final UserRepository userRepository;
 	private final UserRolesRepository userRolesRepository;
 	
+	
+	
 	@Autowired
     public UserService(UserRepository userRepository,UserRolesRepository userRolesRepository) {
         this.userRepository = userRepository;
         this.userRolesRepository=userRolesRepository;
     }
 	
+	public UserAccount findByUsername(String username){
+		return userRepository.findByUsername(username);
+	}
         
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

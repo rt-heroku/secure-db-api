@@ -10,6 +10,10 @@ public class Role {
     private String name;
     private Set<UserAccount> users;
 
+    public Role(String name){
+    	this.name = name;
+    }
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() {
