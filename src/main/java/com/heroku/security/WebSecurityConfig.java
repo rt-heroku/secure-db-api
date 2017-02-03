@@ -26,20 +26,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.httpBasic().and().authorizeRequests()
-			.antMatchers("/login").permitAll()
-				// .antMatchers(HttpMethod.GET,
-				// "/contacts").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
-				// .antMatchers(HttpMethod.GET,
-				// "/product2s").hasAnyAuthority("ROLE_ADMIN")
-				// .antMatchers(HttpMethod.GET,
-				// "/api/v1/profiles/**").hasAnyAuthority("ROLE_USER",
-				// "ROLE_ADMIN")
-				// .antMatchers(HttpMethod.POST,
-				// "/api/v1/profiles/**").hasAnyAuthority("ROLE_ADMIN")
-				// .antMatchers(HttpMethod.PUT,
-				// "/api/v1/profiles/**").hasAnyAuthority("ROLE_ADMIN")
-				// .antMatchers(HttpMethod.DELETE,
-				// "/api/v1/profiles/**").hasAnyAuthority("ROLE_ADMIN")
+			.antMatchers("/").permitAll()
+				// .antMatchers(HttpMethod.GET,"/contacts").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+				// .antMatchers(HttpMethod.GET, "/product2s").hasAnyAuthority("ROLE_ADMIN")
+				// .antMatchers(HttpMethod.GET, "/api/v1/profiles/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+				// .antMatchers(HttpMethod.POST, "/api/v1/profiles/**").hasAnyAuthority("ROLE_ADMIN")
+				// .antMatchers(HttpMethod.PUT, "/api/v1/profiles/**").hasAnyAuthority("ROLE_ADMIN")
+				// .antMatchers(HttpMethod.DELETE, "/api/v1/profiles/**").hasAnyAuthority("ROLE_ADMIN")
 				.anyRequest().authenticated().and().csrf().disable();
 	}
 
