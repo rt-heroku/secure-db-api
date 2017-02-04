@@ -7,6 +7,7 @@ import java.util.Set;
 @Table(name = "roles")
 public class Role {
     private Long id;
+    @Column(unique = true)
     private String name;
     private Set<UserAccount> users;
 

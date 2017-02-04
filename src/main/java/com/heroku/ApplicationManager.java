@@ -24,7 +24,11 @@ import com.heroku.security.repositories.UserRolesRepository;
 @EnableAutoConfiguration(exclude = WebMvcAutoConfiguration.class)
 public class ApplicationManager {
 
-    public static void main(String[] args) {
+    private static final String ROLE_ADMIN = "ROLE_ADMIN";
+
+	private static final String SYSADMIN = "sysadmin";
+
+	public static void main(String[] args) {
         SpringApplication.run(ApplicationManager.class, args);
     }
     
@@ -39,37 +43,38 @@ public class ApplicationManager {
       
       return new CommandLineRunner() {
 
-        @SuppressWarnings("serial")
 		@Override
         public void run(String... arg0) throws Exception {
     		
     		for (int i = 0; i< arg0.length; i++)
-    			System.out.println("arg[" + i + "]=" + arg0[i] );
+    			System.out.println("Running with Argument [" + i + "] =" + arg0[i] );
 
         	if (arg0.length == 2){
-	        	System.out.println("EXECUTING ApplicationManager this will create or replace the SUPER USER admin !!!! - " + arg0.length);
+	        	System.out.println("EXECUTING ApplicationManager this will create or replace the SUPER USER " + SYSADMIN + " !!!! - ");
 	        	String password = arg0[0];
 	        	String email = arg0[1];
 	        	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	    		String hashedPassword = passwordEncoder.encode(password);
 	    		
-	    		UserAccount u = userRepository.findByUsername("admin");
-	    		Set<Role> r = new HashSet<Role>(){{
-                    add(new Role("ROLE_ADMIN"));
-                }};
+	    		UserAccount u = userRepository.findByUsername(SYSADMIN);
+        		Set<Role> roles = new HashSet<Role>();
+    			Role r = userRolesRepository.findByName(ROLE_ADMIN);
+    			if (r == null)
+    				r = new Role(ROLE_ADMIN);
+    			roles.add(r);
                 
 	    		if (u == null){
-	    			u = new UserAccount("admin", hashedPassword, email,r);
+	    			u = new UserAccount(SYSADMIN, hashedPassword, email,roles);
 	    		}else{
 	    			u.setEmail(email);
 	    			u.setPassword(hashedPassword);
 	    			u.setEnabled(1);
-	    			u.setRoles(r);
+	    			u.setRoles(roles);
 	    		}
 	    		
 	    		userRepository.save(u);
 	        	
-	        	System.out.println("\n\nUser admin has been reset!\n\n");
+	        	System.out.println("\n\nUser " + SYSADMIN + " has been reset!\n\n");
 	        	System.out.println("Press CTRL+C to end application...\n\n");
         	}
         }
