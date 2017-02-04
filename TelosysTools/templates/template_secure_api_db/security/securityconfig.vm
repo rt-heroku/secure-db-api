@@ -33,7 +33,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.httpBasic().and().authorizeRequests()
 			.antMatchers("/user/**").hasAuthority("ROLE_ADMIN")
-			.antMatchers("/user").hasAuthority("ROLE_ADMIN")
 			.antMatchers(HttpMethod.POST,"/user/add").hasAnyAuthority("ROLE_ADMIN")
 			.antMatchers(HttpMethod.DELETE,"/user/**").hasAnyAuthority("ROLE_ADMIN")
 			.antMatchers("/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
